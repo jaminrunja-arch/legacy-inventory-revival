@@ -1,0 +1,54 @@
+<%- include('partials/header', { title: 'Dashboard' }) %>
+
+<h1 class="h3 mb-4">Dashboard</h1>
+
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-lg-3">
+    <div class="card"><div class="card-body">
+      <div class="text-muted small">Items in catalog</div>
+      <div class="fs-3"><%= stats.itemCount %></div>
+    </div></div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card"><div class="card-body">
+      <div class="text-muted small">Units on hand</div>
+      <div class="fs-3"><%= stats.totalUnits %></div>
+    </div></div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card"><div class="card-body">
+      <div class="text-muted small">Stock value</div>
+      <div class="fs-3">$<%= stats.stockValue.toFixed(2) %></div>
+    </div></div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card"><div class="card-body">
+      <div class="text-muted small">Low stock items</div>
+      <div class="fs-3 <%= stats.lowStock > 0 ? 'text-danger' : '' %>"><%= stats.lowStock %></div>
+    </div></div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <h2 class="h5 mb-0">Recent orders (<%= stats.orderCount %> total)</h2>
+  <a href="/orders/new" class="btn btn-primary btn-sm">New order</a>
+</div>
+<table class="table table-bordered table-sm">
+  <thead class="table-light">
+    <tr><th>Order #</th><th>Date</th><th>Customer</th><th>SKU</th><th class="text-end">Qty</th><th class="text-end">Total</th></tr>
+  </thead>
+  <tbody>
+    <% recentOrders.forEach(o => { %>
+    <tr>
+      <td><%= o.order_no %></td>
+      <td><%= o.order_date %></td>
+      <td><%= o.customer %></td>
+      <td><%= o.sku %></td>
+      <td class="text-end"><%= o.qty %></td>
+      <td class="text-end">$<%= o.total.toFixed(2) %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('partials/footer') %>

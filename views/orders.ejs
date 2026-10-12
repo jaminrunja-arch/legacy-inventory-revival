@@ -1,0 +1,33 @@
+<%- include('partials/header', { title: 'Orders' }) %>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Order history</h1>
+  <a href="/orders/new" class="btn btn-primary">New order</a>
+</div>
+
+<div class="table-responsive">
+<table class="table table-bordered table-sm">
+  <thead class="table-light">
+    <tr>
+      <th>Order #</th><th>Date</th><th>Customer</th><th>SKU</th><th>Item</th>
+      <th class="text-end">Qty</th><th class="text-end">Unit price</th><th class="text-end">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% orders.forEach(o => { %>
+    <tr>
+      <td><%= o.order_no %></td>
+      <td><%= o.order_date %></td>
+      <td><%= o.customer %></td>
+      <td><%= o.sku %></td>
+      <td><%= o.item_name || '(item removed)' %></td>
+      <td class="text-end"><%= o.qty %></td>
+      <td class="text-end">$<%= o.unit_price.toFixed(2) %></td>
+      <td class="text-end">$<%= o.total.toFixed(2) %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+</div>
+
+<%- include('partials/footer') %>

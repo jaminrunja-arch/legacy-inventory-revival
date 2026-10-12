@@ -1,0 +1,33 @@
+<%- include('partials/header', { title: 'New order' }) %>
+
+<h1 class="h3 mb-3">New order</h1>
+
+<% if (error) { %>
+<div class="alert alert-danger"><%= error %></div>
+<% } %>
+
+<form method="POST" action="/orders" class="col-lg-6">
+  <div class="mb-3">
+    <label for="customer" class="form-label">Customer</label>
+    <input type="text" class="form-control" id="customer" name="customer" value="<%= form.customer || '' %>" required>
+  </div>
+  <div class="mb-3">
+    <label for="sku" class="form-label">Item</label>
+    <select class="form-select" id="sku" name="sku" required>
+      <option value="">Choose an item</option>
+      <% items.forEach(item => { %>
+      <option value="<%= item.sku %>" <%= form.sku === item.sku ? 'selected' : '' %>>
+        <%= item.sku %> - <%= item.name %> ($<%= item.price.toFixed(2) %>, <%= item.qty %> in stock)
+      </option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="qty" class="form-label">Quantity</label>
+    <input type="number" class="form-control" id="qty" name="qty" min="1" value="<%= form.qty || 1 %>" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Place order</button>
+  <a href="/orders" class="btn btn-secondary">Cancel</a>
+</form>
+
+<%- include('partials/footer') %>

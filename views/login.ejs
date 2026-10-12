@@ -1,0 +1,28 @@
+<%- include('partials/header', { title: 'Log in' }) %>
+
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="h4 mb-3">Log in</h1>
+        <% if (error) { %>
+        <div class="alert alert-danger"><%= error %></div>
+        <% } %>
+        <form method="POST" action="/login">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required autofocus>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Log in</button>
+        </form>
+        <p class="text-muted small mt-3 mb-0">Demo account: admin / admin123</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

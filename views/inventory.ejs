@@ -1,0 +1,51 @@
+<%- include('partials/header', { title: 'Inventory' }) %>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Inventory</h1>
+  <a href="/inventory/new" class="btn btn-primary">Add item</a>
+</div>
+
+<form class="row g-2 mb-3" method="GET" action="/inventory">
+  <div class="col-sm-8 col-md-6">
+    <input type="text" class="form-control" name="q" value="<%= q %>" placeholder="Search by SKU or name">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-outline-secondary">Search</button>
+    <% if (q) { %><a href="/inventory" class="btn btn-link">Clear</a><% } %>
+  </div>
+</form>
+
+<div class="table-responsive">
+<table class="table table-bordered table-sm align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>SKU</th><th>Name</th><th class="text-end">Qty</th><th class="text-end">Price</th>
+      <th class="text-end">Reorder at</th><th>Bin</th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (items.length === 0) { %>
+    <tr><td colspan="7" class="text-center text-muted">No items found.</td></tr>
+    <% } %>
+    <% items.forEach(item => { %>
+    <tr class="<%= item.qty <= item.reorder_level ? 'table-warning' : '' %>">
+      <td><%= item.sku %></td>
+      <td><%= item.name %></td>
+      <td class="text-end"><%= item.qty %></td>
+      <td class="text-end">$<%= item.price.toFixed(2) %></td>
+      <td class="text-end"><%= item.reorder_level %></td>
+      <td><%= item.location %></td>
+      <td class="text-nowrap">
+        <a href="/inventory/<%= item.id %>/edit" class="btn btn-sm btn-outline-primary">Edit</a>
+        <form method="POST" action="/inventory/<%= item.id %>/delete" class="d-inline" onsubmit="return confirm('Delete <%= item.sku %>?');">
+          <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+</div>
+<p class="text-muted small">Rows in yellow are at or below their reorder level.</p>
+
+<%- include('partials/footer') %>

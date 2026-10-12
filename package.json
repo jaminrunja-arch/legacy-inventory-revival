@@ -1,0 +1,22 @@
+{
+  "name": "legacy-inventory-revival",
+  "version": "1.0.0",
+  "description": "Modern web version of a 1998 green screen warehouse inventory system",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "reset": "node migrate.js"
+  },
+  "author": "Jamin Runja",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "sql.js": "^1.12.0"
+  }
+}

@@ -1,0 +1,34 @@
+<%- include('partials/header', { title: 'Low Stock Report' }) %>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Low stock report</h1>
+  <button class="btn btn-outline-secondary" onclick="window.print()">Print</button>
+</div>
+
+<% if (items.length === 0) { %>
+<div class="alert alert-success">All items are above their reorder level.</div>
+<% } else { %>
+<p><%= items.length %> item(s) at or below reorder level. Sorted by how far below the level they are.</p>
+<table class="table table-bordered table-sm">
+  <thead class="table-light">
+    <tr>
+      <th>SKU</th><th>Name</th><th>Bin</th><th class="text-end">On hand</th>
+      <th class="text-end">Reorder level</th><th class="text-end">Short by</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.forEach(item => { %>
+    <tr>
+      <td><%= item.sku %></td>
+      <td><%= item.name %></td>
+      <td><%= item.location %></td>
+      <td class="text-end"><%= item.qty %></td>
+      <td class="text-end"><%= item.reorder_level %></td>
+      <td class="text-end text-danger"><%= item.short_by %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+<% } %>
+
+<%- include('partials/footer') %>
